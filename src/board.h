@@ -15,7 +15,7 @@ board* newBoard();
 
 bitboard coordinatesToQueen(int x, int y);
 
-bool placeQueen(board* b, int x, int y);
+bool changeQueenState(board* b, int x, int y);
 
 void printQueens(board b);
 

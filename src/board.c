@@ -20,7 +20,7 @@ bitboard coordinatesToQueen(int x, int y){
     return newQueen;
 }
 
-bool placeQueen(board* b, int x, int y){
+bool changeQueenState(board* b, int x, int y){
     bitboard newQueen = coordinatesToQueen(x, y);
     if(!newQueen)
         return false;

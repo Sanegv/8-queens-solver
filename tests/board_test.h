@@ -34,29 +34,34 @@ void testCoordinatesToQueen(){
     printf("Passed.\n");
 }
 
-void testPlaceQueen(){
-    printf("Running placeQueen() tests... ");
+void testChangeQueenState(){
+    printf("Running changeQueenState() tests... ");
+
     board test = {0};
     board expected = {0x8000000000000000};
     assert(
-        (placeQueen(&test, 8, 0)) == 0 && "Should not be able to have x > 8"
+            (changeQueenState(&test, 8, 0)) == 0 && "Should not be able to have x > 8"
     );
-    assert(test.queens == 0 && "placeQueen modified bitboard despite invalid coordinates. (x >= 8)");
+    assert(test.queens == 0 && "changeQueenState modified bitboard despite invalid coordinates. (x >= 8)");
     assert(
-            (placeQueen(&test, 0, 8)) == 0 && "Should not be able to have y >= 8"
+            (changeQueenState(&test, 0, 8)) == 0 && "Should not be able to have y >= 8"
     );
-    assert(test.queens == 0 && "placeQueen modified bitboard despite invalid coordinates. (y >= 8)");
+    assert(test.queens == 0 && "changeQueenState modified bitboard despite invalid coordinates. (y >= 8)");
     assert(
-            (placeQueen(&test, -1, 0)) == 0 && "Should not be able to have x < 0"
+            (changeQueenState(&test, -1, 0)) == 0 && "Should not be able to have x < 0"
     );
-    assert(test.queens == 0 && "placeQueen modified bitboard despite invalid coordinates. (x < 0)");
+    assert(test.queens == 0 && "changeQueenState modified bitboard despite invalid coordinates. (x < 0)");
     assert(
-            (placeQueen(&test, 0, -1)) == 0 && "Should not be able to have y < 0"
+            (changeQueenState(&test, 0, -1)) == 0 && "Should not be able to have y < 0"
     );
-    assert(test.queens == 0 && "placeQueen modified bitboard despite invalid coordinates. (y < 0)");
+    assert(test.queens == 0 && "changeQueenState modified bitboard despite invalid coordinates. (y < 0)");
 
-    assert(placeQueen(&test, 7, 7) && "Should accept valid coordinates.");
-    assert(test.queens == expected.queens && "placeQueen should have modified bitboard with valid coordinates.");
+    assert(changeQueenState(&test, 7, 7) && "changeQueenState should accept valid coordinates.");
+    assert(test.queens == expected.queens && "changeQueenState should have modified bitboard with valid coordinates.");
+
+    assert(changeQueenState(&test, 7, 7) && "changeQueenState should accept valid coordinates.");
+    assert((test.queens == 0) && "changeQueenState should have removed the queen at specified coordinates.");
+
     printf("Passed.\n");
 }
 
@@ -71,7 +76,7 @@ void testCountQueens(){
 void allBoardTests(){
     testNewBoard();
     testCoordinatesToQueen();
-    testPlaceQueen();
+    testChangeQueenState();
     testCountQueens();
     printf("All board.h tests passed.\n");
 }
