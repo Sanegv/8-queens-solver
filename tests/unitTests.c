@@ -10,6 +10,7 @@ void allTests(){
 
 int main(){
     allTests();
+    printf("All tests passed.\n");
 
     return 0;
 }

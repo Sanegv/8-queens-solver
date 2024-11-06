@@ -8,9 +8,13 @@ void testSolve(){
     printf("Running solve() tests... ");
 
     board test = {0};
-    solve(&test);
+    assert(solve(&test, 0) && "solve() should find a solution");
     assert(countQueens(test) == 8 && "Solution should have eight queens exactly.");
     assert(checkPlacement(&test) && "Solution should be valid.");
+
+    test.queens = 0x3;
+    assert(!solve(&test, 0) && "solve() should not find an impossible solution");
+    assert((test.queens == 0x3) && "solve() should not alter the board if it does not find a solution.");
 
     printf("Passed.\n");
 }
@@ -116,9 +120,24 @@ void testCheckRanks(){
     printf("Passed.\n");
 }
 
+void testCheckEmpty(){
+    printf("Running checkEmpty() tests... ");
+
+    board test = {0x80000};
+    assert(checkEmpty(&test, 0, 0) && "Empty tile should return true.");
+    assert(!checkEmpty(&test, 3, 2) && "Occupied tile should return false.");
+    assert(!checkEmpty(&test, -1, 2) && "x < 0 should return false.");
+    assert(!checkEmpty(&test, 1, -1) && "y < 0 should return false.");
+    assert(!checkEmpty(&test, 8, 2) && "x > 7 should return false.");
+    assert(!checkEmpty(&test, 1, 8) && "y > 7 should return false.");
+
+    printf("Passed.\n");
+}
+
 void allSolverTests(){
     printf("Running solver.h tests...\n");
 
+    testCheckEmpty();
     testCheckRanks();
     testCheckFiles();
     testCheckDiagonals();

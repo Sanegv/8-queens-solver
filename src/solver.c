@@ -1,7 +1,28 @@
 #include "solver.h"
 
-void solve(board *b){
-    //TODO
+bool solve(board *b, int x){
+    for(int i = x; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            if(!checkEmpty(b, i, j))
+                continue;
+            changeQueenState(b, i, j);
+            if(!checkPlacement(b)) {
+                changeQueenState(b, i, j);
+                continue;
+            }
+            if(solve(b, i+1) || countQueens(*b) == 8)
+                return true;
+            changeQueenState(b, i, j);
+        }
+    }
+    return false;
+}
+
+bool checkEmpty(board *b, int i, int j){
+    bitboard compare = coordinatesToQueen(i, j);
+    if(!compare)
+        return false;
+    return (b->queens & compare) == 0;
 }
 
 bool checkPlacement(board* b){
