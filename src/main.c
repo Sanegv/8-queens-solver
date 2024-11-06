@@ -2,7 +2,7 @@
 
 int main(){
     board* b = newBoard();
-    solve(b);
+    solve(b, 0);
     printQueens(*b);
     freeBoard(b);
 }
